@@ -1,3 +1,18 @@
+checkbox、radio、select复习
+
+[效果查看](https://onlymisaky.github.io/reviewForm/)
+[原生版Code](https://github.com/onlymisaky/reviewForm/blob/master/index.html)
+[jQuery版本Code](https://github.com/onlymisaky/reviewForm/blob/master/jQuery.html)
+[angular版本Code](https://github.com/onlymisaky/reviewForm/blob/master/angular.html)
+[angular不完美版本Code](https://github.com/onlymisaky/reviewForm/blob/master/angular2.html)
+
+
+
+其实我是想写成博客的，但是我发现。。。。。。。。。。。
+
+
+
+
 ## 前言
 用`angular`已经快半年了，基本上都是在写`component`或者用别人写好的`component`，最近在写一个需要用到`checkbox`、`radio`、`select`这些表单的组件，发现对这些表单在`angular`中的运用还不是很熟练，或者说是理解不到位，所以就单独拿出来练习一下。
 ## checkbox
