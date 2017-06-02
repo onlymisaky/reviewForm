@@ -3,7 +3,9 @@
 ## checkbox
 ### 基础
 `checkbox`用`ng-model`绑定时，默认绑定的值是`Boolean`类型的。
+
 ![image](http://i4.buimg.com/1949/a9431167786724e2.png)
+
 我们也可以用`ng-true-value`,`ng-false-value`为其指定选中时绑定的值，*注意 `ng-true-value`中的值如果需要显示字符串的话必须使用单引号*
 ```html
 <body ng-app="app" ng-controller="Ctrl as ctrl">
