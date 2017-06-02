@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>index</title>
+    <title>index-js</title>
 </head>
 
 <body>
@@ -28,11 +28,10 @@
         <br><br>
 
         <input type="submit" value="提交" id="submit">
-        <input type="reset" value="重置">
     </form>
     <a href="./angular.html">angular</a>
     <a href="./jQuery.html">jQuery</a>
-    <a href="./index.html">index</a>
+    <a href="./index.html">index-js</a>
 </body>
 
 </html>
@@ -44,11 +43,21 @@
     var options = add.getElementsByTagName("option");
     var submit = document.getElementById("submit");
 
+
+    var checkedList = [];
     // checkbox点击事件
     for (var i = 0; i < hobbys.length; i++) {
         var hobby = hobbys[i];
         hobby.idx = i;
         hobby.addEventListener("click", function () {
+
+            var value = this.value;
+            if (this.checked) {
+                checkedList.push(value);
+            } else {
+                var index = checkedList.indexOf(value);
+                checkedList.splice(index, 1);
+            }
 
             var flag = true;
             for (var i = 0; i < hobbys.length; i++) {
@@ -58,42 +67,63 @@
                 }
             }
             all.checked = flag;
+
+            console.log("checkbox ==> ", value);
+            console.log("checkedList ==> ", checkedList);
+
+        });
+    }
+    // 全选
+    all.addEventListener("click", function () {
+        checkedList = [];
+        for (var i = 0; i < hobbys.length; i++) {
+            var checkbox = hobbys[i];
+            checkbox.checked = this.checked;
+            if (this.checked) {
+                checkedList.push(checkbox.value);
+            }
+        }
+        console.log("checkedList ==> ", checkedList);
+    });
+
+
+    var checkedRadio = "";
+    // radio 点击事件
+    for (var i = 0; i < gender.length; i++) {
+        var radio = gender[i];
+        radio.addEventListener("click", function () {
+            checkedRadio = this.value;
+            console.log("checkedRadio ==> ", checkedRadio);
         });
     }
 
-    // 全选
-    all.addEventListener("click", function () {
-        for (var i = 0; i < hobbys.length; i++) {
-            var v = hobbys[i];
-            v.checked = this.checked;
-        }
-    });
 
     // select
     add.addEventListener("change", function () {
         var idx = add.options.selectedIndex;
-        console.log("下拉框 ", this.value, options[idx].innerText);
+        console.log("selected ==> ", this.value, options[idx].innerText);
     });
+
 
     // 提交时获取值
     submit.addEventListener("click", function (e) {
         e.preventDefault();
 
-        var arr = [];
+        var checkedList2 = [];
         for (var i = 0; i < hobbys.length; i++) {
             if (hobbys[i].checked) {
-                arr.push(hobbys[i].value)
+                checkedList2.push(hobbys[i].value)
             }
         }
-        console.log("复选框 ", arr);
+        console.log("checkedList ==> ", checkedList2);
 
         for (var i = 0; i < gender.length; i++) {
             if (gender[i].checked) {
-                console.log("单选框 ", gender[i].value);
+                console.log("checkedRadio ==> ", gender[i].value);
                 break;
             }
         }
 
-        console.log("下拉框 ", add.value, options[add.options.selectedIndex].innerText);
+        console.log("selected ==> ", add.value, options[add.options.selectedIndex].innerText);
     });
 </script>

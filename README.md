@@ -28,8 +28,13 @@ angular
 ```
 ![image](http://i4.buimg.com/1949/a4f4aa5b4b011b3b.png)
 ### 进阶
-在实际开发中，我们常常会用到多个`checkbox`，上面的方法不能适合更多的场景，
-```html
-```
-```javascript
-```
+在实际开发中，我们常常会用到多个`checkbox`，这个时候就需要知道选中的哪些选项，还有全选反选这些操作。除了`angular.html`中所提供的方法，我们也可以使用`ng-true-value`
+
+
+
+
+
+
+
+
+好吧，我不适合写作。。。

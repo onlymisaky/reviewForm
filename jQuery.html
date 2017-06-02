@@ -29,7 +29,6 @@
         <br><br>
 
         <input type="submit" value="提交" id="submit">
-        <input type="reset" value="重置">
     </form>
     <a href="./angular.html">angular</a>
     <a href="./jQuery.html">jQuery</a>
@@ -38,30 +37,64 @@
 
 </html>
 <script>
-    var $hobbys = $("input[name=hobby]");
+    var $checkboxs = $("input[name=hobby]");
     var $all = $("#all");
     var $gender = $("input[name=gender]");
     var $add = $("#add");
     var $submit = $("#submit");
 
-    $hobbys.on("click", function () {
+
+    var checkedList = [];
+    $checkboxs.on("click", function () {
+        if (this.checked) {
+            checkedList.push(this.value);
+        } else {
+            var index = checkedList.indexOf(this.value);
+            checkedList.splice(index, 1);
+        }
+
         var flag = true;
-        $hobbys.each(function (i, v) {
+        $checkboxs.each(function (i, v) {
             if (!v.checked) {
                 flag = false;
                 return false;
             }
         });
         $all[0].checked = flag;
+
+        console.log("checkbox ==> ", this.value);
+        console.log("checkedList ==> ", checkedList);
+    });
+    $all.on("click", function () {
+        checkedList = [];
+        if (this.checked) {
+            $checkboxs.each(function (index, checkbox) {
+                checkedList.push(checkbox.value);
+            });
+        }
+
+        $hobbys.prop("checked", this.checked);
+
+        console.log("checkedList ==> ", checkedList);
     });
 
-    $all.on("click", function () {
-        $hobbys.prop("checked", this.checked);
-    });
+
+    var checkedRadio = "";
+    $gender.on("click", function () {
+        checkedRadio = this.value;
+        console.log("checkedRadio ==> ", checkedRadio);
+    })
+
+
+    $add.on("change", function () {
+        console.log("selected ==> ", $(this).val(), $(this).find("option:selected").text());
+
+    })
 
     $submit.on("click", function (e) {
+        e.preventDefault();
         var arr = [];
-        $hobbys.each(function (i, v) {
+        $checkboxs.each(function (i, v) {
             if (v.checked) {
                 arr.push($(this).val());
             }

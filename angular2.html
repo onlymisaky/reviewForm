@@ -5,61 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>angular</title>
-    <script src="./lib/angular.min.js"></script>
+    <title>ng-表单</title>
+    <script src="../lib/angular.js"></script>
 </head>
 
 <body ng-app="app" ng-controller="Ctrl as ctrl">
     <form>
 
         <!-- 复选框 Start -->
-        <label ng-repeat="(index,item) in ctrl.checkData" for="{{ item.key }}">
+        <label ng-repeat="(i,v) in ctrl.hobbys" for="{{ v.idx }}">
                 <input type="checkbox" 
-                       name="check" 
-                       textue="{{ item.text }}" 
-                       id="{{ item.key }}" 
-                       ng-model="item.checked"
-                       ng-change="ctrl.changeCheckbox($event, item, index)">
-                {{ item.text }}
+                       name="hobby" 
+                       value="{{ v.val }}" 
+                       id="{{ v.idx }}" 
+                       ng-model="ctrl.checked[i]" 
+                       ng-true-value='"{{v.val}}"'
+                       ng-false-value='false'
+                       ng-change="ctrl.ck()">
+                {{ v.val }}
         </label>
         <label for="all">
             <input type="checkbox" 
                    name="all" 
                    id="all"
                    ng-model="ctrl.isAll"
-                   ng-change="ctrl.ckall()">全选
+                   ng-change="ctrl.ckall()">
+            全选
         </label>
         <!-- 复选框 End -->
         <br><br>
 
         <!-- 单选按钮 Start -->
-        <label ng-repeat="item in ctrl.radioData track by $index" for="{{ item.key }}">
+        <label ng-repeat="(i,v) in ctrl.genders" for="{{ v.idx }}">
             <input type="radio" 
                    name="gender" 
-                   value="{{ item.key }}" 
-                   id="{{ item.key }}" 
-                   ng-model="item.checked"
-                   ng-change="ctrl.changeRadio($event, item, index)">
-            {{ item.text }}
+                   value="{{ v.idx }}" 
+                   id="{{ v.idx }}" 
+                   ng-model="ctrl.formdata.gender">
+            {{ v.val }}
         </label>
         <!-- 单选按钮 End -->
         <br><br>
 
         <!-- 下拉框 Start -->
         <select id="add" 
-                ng-model="ctrl.selected" 
-                ng-init="ctrl.selected=ctrl.selectData[0]" 
-                ng-options="city.name for city in ctrl.selectData"
-                ng-change="ctrl.changeSelect()">
+                ng-model="ctrl.formdata.mycity" 
+                ng-init="ctrl.formdata.mycity=ctrl.add[0].id" 
+                ng-options="city.id as city.name for city in ctrl.add">
         </select>
         <!-- 下拉框 End -->
         <br><br>
 
         <input type="submit" value="提交" ng-click="ctrl.submit($event)">
     </form>
-    <a href="./angular.html">angular</a>
-    <a href="./jQuery.html">jQuery</a>
-    <a href="./index.html">index</a>
 </body>
 
 </html>
@@ -68,83 +66,76 @@
         .module("app", [])
         .controller("Ctrl", ctrl);
 
-    ctrl.$inject = ['$filter'];
+    ctrl.$inject = [];
 
-    function ctrl($filter) {
+    function ctrl() {
         var vm = this;
 
-        // checkbox数据
-        vm.checkData = [
-            { key: "eat", text: "吃饭" }, 
-            { key: "sleep", text: "睡觉" }, 
-            { key: "code", text: "写代码" } ];
-
-        // 被选中的checkbox
-        vm.checkedList = [];
-        // 是否全选
-        vm.isAll = false;
-        // checkbox change 事件
-        vm.changeCheckbox = function ($event, item, index) {
-             if (item.checked) {
-                 vm.checkedList.push(item);
-             } else {
-                 var key = vm.checkedList.indexOf(item);
-                 vm.checkedList.splice(key, 1);
-             }
-             console.log("checkbox ==> ", item);
-             console.log("checkedList ==> ", vm.checkedList);
-             vm.isAll = $filter('filter')(vm.checkData, {checked: true}).length === vm.checkData.length;
-        }
-        vm.ckall = function () {
-            vm.checkedList = [];
-            angular.forEach(vm.checkData, function (item) {
-                item.checked = vm.isAll;
-                if(vm.isAll) {
-                    vm.checkedList.push(item);
-                }
-            });
-            console.log("checkedList ==> ", vm.checkedList);
-        }
-
-
-
+        // 后台获取到的所有爱好
+        vm.hobbys = [
+            { idx: "eat", val: "吃饭" }, 
+            { idx: "sleep", val: "睡觉" }, 
+            { idx: "code", val: "写代码" } ];
 
         // 后台获取到的所有性别
-        vm.radioData = [
-            { key: "boy", text: "男生" }, 
-            { key: "girl", text: "女生" } ];
-        // 选中的radio
-        vm.checkedRadio = null;
-        // radio change 时间
-        vm.changeRadio = function ($event, item, index) {
-            vm.checkedRadio = item;
-            console.log(item);
-        } 
+        vm.genders = [
+            { idx: "boy", val: "男生" }, 
+            { idx: "girl", val: "女生" } ];
 
-
-
-
-        // select数据
-        vm.selectData = [
+        // 后台获取到的所有地址
+        vm.add = [
             { id: "1", name: "北京" }, 
             { id: "2", name: "上海" }, 
             { id: "3", name: "广州" } ];
-        // 选中的select
-        vm.选中的selected = null;
-        // select change 事件
-        vm.changeSelect = function () {
-            console.log("下拉框 ==> ", vm.selected);
-        }
 
+        // 是否全部选中
+        vm.isAll = false;
 
+        // 所有选中的爱好
+        vm.checked = [];
 
+        // form表单的数据
+        vm.formdata = {};
 
-        // submit 事件
         vm.submit = function ($event) {
-            console.log("checkedList ==> ", vm.checkedList);
-            console.log("checkedRadio ==> ", vm.checkedRadio);
-            console.log("selected ==> ", vm.selected);
+
+            $event.preventDefault();
+
+            vm.formdata.hb = vm.checked.filter(function (v) {
+                return v;
+            });
+
+            console.log("复选框 ", vm.formdata.hb);
+
+            console.log("单选框 ", vm.formdata.gender);
+
+            console.log("下拉框 ", vm.formdata.mycity);
+
+            console.log("form表单", vm.formdata);
         }
 
+        vm.ckall = function () {
+            if (vm.isAll) {
+                vm.checked = [];
+                for (var i = 0; i < vm.hobbys.length; i++) {
+                    vm.checked.push(vm.hobbys[i].val);
+                }
+            } else {
+                vm.checked = [];
+            }
+        }
+
+        vm.ck = function () {
+
+            var tempArr = vm.checked.filter(function (v) {
+                return v;
+            });
+
+            if (tempArr.length == vm.hobbys.length) {
+                vm.isAll = true;
+            } else {
+                vm.isAll = false;
+            }
+        }
     }
 </script>
