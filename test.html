@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body ng-app="app" ng-controller="Ctrl as ctrl">
+    <label ng-repeat="item in ctrl.checkboxData track by $index">
+        <input type="checkbox"
+            ng-model="ctrl.checked" 
+            ng-true-value="'选中'" 
+            ng-false-value="'取消选中'" 
+            ng-change="ctrl.changeCheckbox()">{{ ::item.text }}
+    </label>
+
+</body>
+
+</html>
+<script src="./lib/angular.min.js"></script>
+<script>
+    angular
+        .module("app", [])
+        .controller("Ctrl", function () {
+            var vm = this;
+            vm.checkboxData = [
+                { key: "eat", text: "吃饭" },
+                { key: "sleep", text: "睡觉" },
+                { key: "code", text: "写代码" }
+            ];
+            vm.changeCheckbox = function () {
+                console.log(vm.checked);
+            }
+        });
+</script>

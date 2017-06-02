@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery</title>
+    <script src="./lib/jQuery.min.js"></script>
+</head>
+
+<body>
+    <form>
+        <input type="checkbox" name="hobby" value="吃饭" id="eat"><label for="eat">吃饭</label>
+        <input type="checkbox" name="hobby" value="睡懒觉" id="sleep"><label for="sleep">睡懒觉</label>
+        <input type="checkbox" name="hobby" value="写代码" id="code"><label for="code">写代码</label>
+        <input type="checkbox" name="all" id="all"><label for="all">全选</label>
+        <br><br>
+
+        <input type="radio" name="gender" value="boy" id="boy"><label for="boy">男生</label>
+        <input type="radio" name="gender" value="girl" id="girl"><label for="girl">女生</label>
+        <br><br>
+
+        <select id="add">
+            <option value="1">北京</option>
+            <option value="2">上海</option>
+            <option value="3">广州</option>
+        </select>
+        <br><br>
+
+        <input type="submit" value="提交" id="submit">
+        <input type="reset" value="重置">
+    </form>
+    <a href="./angular.html">angular</a>
+    <a href="./jQuery.html">jQuery</a>
+    <a href="./index.html">index</a>
+</body>
+
+</html>
+<script>
+    var $hobbys = $("input[name=hobby]");
+    var $all = $("#all");
+    var $gender = $("input[name=gender]");
+    var $add = $("#add");
+    var $submit = $("#submit");
+
+    $hobbys.on("click", function () {
+        var flag = true;
+        $hobbys.each(function (i, v) {
+            if (!v.checked) {
+                flag = false;
+                return false;
+            }
+        });
+        $all[0].checked = flag;
+    });
+
+    $all.on("click", function () {
+        $hobbys.prop("checked", this.checked);
+    });
+
+    $submit.on("click", function (e) {
+        var arr = [];
+        $hobbys.each(function (i, v) {
+            if (v.checked) {
+                arr.push($(this).val());
+            }
+        });
+        console.log("复选框 ", arr);
+
+        console.log("单选框 ", $gender.filter(":checked").val());
+
+        console.log("下拉框value ", $add.val(), $add.find("option:selected").text());
+
+        return false;
+    });
+</script>
