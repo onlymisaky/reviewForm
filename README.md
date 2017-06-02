@@ -1,10 +1,15 @@
 checkbox、radio、select复习
 
 [效果查看](https://onlymisaky.github.io/reviewForm/)
+
 [原生版Code](https://github.com/onlymisaky/reviewForm/blob/master/index.html)
+
 [jQuery版本Code](https://github.com/onlymisaky/reviewForm/blob/master/jQuery.html)
+
 [angular版本Code](https://github.com/onlymisaky/reviewForm/blob/master/angular.html)
+
 [angular不完美版本Code](https://github.com/onlymisaky/reviewForm/blob/master/angular2.html)
+
 
 
 
